@@ -12,8 +12,32 @@ The objective of this project was to demonstrate effective network automation by
 - Ansible Control Node: A dedicated host machine (Ubuntu-based) with Ansible installed is required to execute the playbook and manage devices.
 - VirtualBox Bridged Adapter: The Ansible control node runs inside a VirtualBox virtual machine configured with a bridged network adapter, enabling it to operate on the same LAN as the physical Cisco devices.
 
-### Setup Used 
+## Setup Used 
 ![image](https://github.com/user-attachments/assets/e1ce99a0-7690-40f4-9481-58f246aadbed)
 
 
+##  Requirements
+
+
+
+
+
+### 📁 Ansible Inventory (`inventory.ini`)
+
+```ini
+[cisco_devices]
+ROUTER-1 ansible_host=192.168.125.1
+SWITCH-1 ansible_host=192.168.125.2
+SWITCH-2 ansible_host=192.168.125.3
+
+[cisco_devices:vars]
+ansible_user=cisco
+ansible_password=cisco
+ansible_port=22
+ansible_become=yes
+ansible_become_method=enable
+ansible_become_password=cisco
+ansible_network_os=cisco.ios.ios
+ansible_connection=network_cli
+```
 
