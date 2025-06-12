@@ -102,28 +102,6 @@ ansible_connection=network_cli          # Use CLI connection for network devices
 ### Outcome
 The successful implementation of Ansible for network automation on a Cisco 1900 router showcased the potential for efficient network management and configuration retrieval. This project highlighted my ability to set up and configure automation tools, troubleshoot network connectivity, and manage network devices programmatically.
 
-Certainly! Here's a polished **Markdown section** you can add to your GitHub README under the title "Skills and Tools Utilized" with clear formatting for a professional presentation:
-
-```markdown
-### 🛠️ Skills and Tools Utilized
-
-- **Tools:**  
-  Ansible, Cisco IOS, Ubuntu Linux
-
-- **Skills:**  
-  Network Automation, Ansible Playbook Development, Secure Shell (SSH) Configuration, Network Device Interaction, Troubleshooting and Debugging Cisco CLI output
-
-- **Ansible Modules Used:**  
-  `ping`, `ios_command`, `copy`, `file`, `set_fact`
-
-- **Configuration Files:**  
-  - `inventory.ini` – Defines hosts and their variables  
-  - `ansible.cfg` – Customizes Ansible behavior (e.g., disabling host key checking)  
-  - `backup_playbook.yml` – Automates the backup of Cisco device configurations
-```
-
-Let me know if you want icons or visuals added to spice up the README further!
-
 
 
 ## Watch the video on YouTube or [View on LinkedIn](https://www.linkedin.com/posts/kenneth-nweke-4a9456185_networkautomation-ansible-cisco-activity-7223960575465168896-3jzL?utm_source=share&utm_medium=member_desktop)
