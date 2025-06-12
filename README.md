@@ -93,16 +93,12 @@ ansible_connection=network_cli          # Use CLI connection for network devices
         content: "{{ running_config.stdout[0] }}"  # Save config content to file
         dest: "{{ backup_dir }}/{{ device_hostname }}_{{ global_timestamp }}.cfg"  # Filename includes hostname and timestamp
 ```
-
-
-## Watch the video on YouTube or [View on LinkedIn](https://www.linkedin.com/posts/kenneth-nweke-4a9456185_networkautomation-ansible-cisco-activity-7223960575465168896-3jzL?utm_source=share&utm_medium=member_desktop)
-[![Link to YouTube Video](https://img.youtube.com/vi/q0DuZ_mXMuQ/0.jpg)](https://youtu.be/q0DuZ_mXMuQ)
-
-
 ### Outcome
-The successful implementation of Ansible for network automation on a Cisco 1900 router showcased the potential for efficient network management and configuration retrieval. This project highlighted my ability to set up and configure automation tools, troubleshoot network connectivity, and manage network devices programmatically.
+As a result of this project, an automated and repeatable solution was successfully implemented to back up the running configurations of multiple Cisco network devices. Upon execution of the Ansible playbook, a new backup directory is created locally on the Ansible host system, named using a timestamp in the format YYYY-MM-DD_HH-MM-SS. This ensures that each backup session is uniquely organized and traceable.
 
+The playbook connects to each specified device (router and switches) over SSH, extracts the hostname dynamically, retrieves the full running configuration using standard Cisco IOS commands, and stores the configuration file locally. Each backup file is named using the format <hostname>_<timestamp>.cfg, enabling clear identification of the source and time of the configuration snapshot.
 
+This automated process eliminates the need for manual backups, reduces human error, and ensures consistent documentation of network device states, which is critical for disaster recovery, auditing, and change management in professional IT environments.
 
 ## Watch the video on YouTube or [View on LinkedIn](https://www.linkedin.com/posts/kenneth-nweke-4a9456185_networkautomation-ansible-cisco-activity-7223960575465168896-3jzL?utm_source=share&utm_medium=member_desktop)
 [![Link to YouTube Video](https://img.youtube.com/vi/q0DuZ_mXMuQ/0.jpg)](https://youtu.be/q0DuZ_mXMuQ)
