@@ -15,30 +15,6 @@ The objective of this project was to demonstrate effective network automation by
 ## STopology Used 
 ![image](https://github.com/user-attachments/assets/e1ce99a0-7690-40f4-9481-58f246aadbed)
 
-
-
-
-### 📁 Ansible Inventory (`inventory.ini`)
-
-```ini
-[cisco_devices]
-ROUTER-1 ansible_host=192.168.125.1
-SWITCH-1 ansible_host=192.168.125.2
-SWITCH-2 ansible_host=192.168.125.3
-
-[cisco_devices:vars]
-ansible_user=cisco
-ansible_password=cisco
-ansible_port=22
-ansible_become=yes
-ansible_become_method=enable
-ansible_become_password=cisco
-ansible_network_os=cisco.ios.ios
-ansible_connection=network_cli
-```
-
-
-
 ### 📁 Ansible Inventory (`inventory.ini`)
 
 ```ini
@@ -60,3 +36,60 @@ ansible_network_os=cisco.ios.ios        # Specify Cisco IOS network OS plugin
 ansible_connection=network_cli          # Use CLI connection for network devices
 ```
 
+### 📄 Ansible Playbook: `backup_playbook.yml`
+
+```yaml
+---
+- name: Backup Cisco Device Configurations
+  hosts: cisco_devices          # Target group of Cisco devices defined in the inventory
+  gather_facts: no              # Skip fact gathering (not needed for network devices)
+  vars:
+    backup_base_dir: "{{ playbook_dir }}/backups"  # Base directory for storing backups
+
+  pre_tasks:
+    - name: Generate timestamp (run once on localhost)
+      delegate_to: localhost
+      run_once: true
+      set_fact:
+        global_timestamp: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"  # Get current date/time
+
+    - name: Set shared backup directory path
+      set_fact:
+        backup_dir: "{{ backup_base_dir }}/{{ global_timestamp }}"  # Full backup directory path with timestamp
+
+  tasks:
+    - name: Create local backup directory (once for all backups)
+      delegate_to: localhost
+      run_once: true
+      file:
+        path: "{{ backup_dir }}"   # Create the backup directory locally
+        state: directory
+        mode: '0755'
+
+    - name: Get device hostname
+      ios_command:
+        commands: "show running-config | include ^hostname"  # Fetch the hostname from running config
+      register: hostname_output
+
+    - name: Extract hostname
+      set_fact:
+        device_hostname: "{{ hostname_output.stdout[0].split(' ')[1] }}"  # Parse hostname from command output
+
+    - name: Backup running config
+      ios_command:
+        commands: "show running-config"  # Retrieve full running configuration
+      register: running_config
+
+    - name: Ensure backup directory exists on localhost
+      delegate_to: localhost
+      file:
+        path: "{{ backup_dir }}"  # Double-check directory exists before saving files
+        state: directory
+        mode: '0755'
+
+    - name: Save config to file
+      delegate_to: localhost
+      copy:
+        content: "{{ running_config.stdout[0] }}"  # Save config content to file
+        dest: "{{ backup_dir }}/{{ device_hostname }}_{{ global_timestamp }}.cfg"  # Filename includes hostname and timestamp
+```
