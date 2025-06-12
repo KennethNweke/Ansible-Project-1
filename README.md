@@ -37,3 +37,26 @@ ansible_network_os=cisco.ios.ios
 ansible_connection=network_cli
 ```
 
+
+
+### 📁 Ansible Inventory (`inventory.ini`)
+
+```ini
+# Define the group of Cisco network devices
+[cisco_devices]
+ROUTER-1 ansible_host=192.168.125.1  # Cisco 1900 router
+SWITCH-1 ansible_host=192.168.125.2  # Cisco switch 1
+SWITCH-2 ansible_host=192.168.125.3  # Cisco switch 2
+
+# Group variables applied to all devices in [cisco_devices]
+[cisco_devices:vars]
+ansible_user=cisco                      # SSH username
+ansible_password=cisco                  # SSH password
+ansible_port=22                         # Default SSH port
+ansible_become=yes                      # Enable privilege escalation
+ansible_become_method=enable            # Use 'enable' mode for Cisco devices
+ansible_become_password=cisco           # Password for enable mode
+ansible_network_os=cisco.ios.ios        # Specify Cisco IOS network OS plugin
+ansible_connection=network_cli          # Use CLI connection for network devices
+```
+
