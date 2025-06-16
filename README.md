@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/28d64bbc-6577-44f5-a16b-acb8478ab120)
+
+
 # Configuration Backup Using Ansible
 In this project, Ansible was utilized to automate the configuration backup process for multiple Cisco network devices. A designated inventory group was created to manage a router and two switches, allowing their running configurations to be systematically retrieved and stored using a timestamped naming convention for both folders and files.
 
